@@ -38,4 +38,24 @@ public class Reservation {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setRestaurantId(int restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }

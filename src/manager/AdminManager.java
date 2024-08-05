@@ -1,14 +1,26 @@
 package manager;
 
+import db.DBUtil;
 import db.RestaurantRepository;
 import db.RestaurantRepositoryImpl;
 import entity.Restaurant;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class AdminManager {
+    Scanner sc = new Scanner(System.in);
+    private Connection conn;
+    private PreparedStatement ps;
+    private ResultSet rs;
+    private int receiveCnt;
 
     RestaurantRepository restaurantRepository= RestaurantRepositoryImpl.getInstance();
 
@@ -131,5 +143,50 @@ public class AdminManager {
             System.out.println("SQLException 발생");
             throw new RuntimeException(e);
         }
+    }
+    public void printWaitList(Restaurant restaurant) throws SQLException {
+        List<Restaurant> list = new ArrayList<>();
+        try{
+            String sql = "select * from reservation as a, restaurant as b where a.restaurant_id = b.restaurant_id";
+            conn = DBUtil.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add((Restaurant)rs);
+                System.out.println(list); // 이거 될까요 ?
+            }
+        }catch (SQLException e){
+            System.out.print("대기 명단 오류");
+            throw e;
+        } finally {
+            DBUtil.close(rs,ps,conn);
+        }
+    }
+
+    public void receiveCustomer(Restaurant restaurant) throws SQLException {
+        int empty = 0;
+        int receiveCnt =0;
+        System.out.println("입장 받을 손님 수 : ");
+        empty = sc.nextInt(); // 빈 자리 수
+        try {
+            while (receiveCnt <= empty){ // 이건 일단 되는 척만 해놨습니다..
+                String sql = "delete from reservation\n" +
+                        "where restaurant_id = ? and id = (select min(id) from reservation\n" +
+                        "group by restaurant_id\n" +
+                        "having restaurant_id = ?)";
+                ps.setInt(1, restaurant.getId());
+                ps.setInt(2, restaurant.getId());
+                rs = ps.executeQuery();
+                receiveCnt++;
+            }
+            printWaitList(restaurant); //위에 출력이 된다면 OK..
+
+        } catch (SQLException e){
+            System.out.println("손님 입장 오류");
+            throw e;
+        } finally {
+            DBUtil.close(rs, ps, conn);
+        }
+
     }
 }

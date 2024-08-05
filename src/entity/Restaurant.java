@@ -91,4 +91,18 @@ public class Restaurant {
     public void setAccept(int accept) {
         this.accept = accept;
     }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", state='" + state + '\'' +
+                ", rname='" + rname + '\'' +
+                ", number='" + number + '\'' +
+                ", adminId=" + adminId +
+                ", address='" + address + '\'' +
+                ", category='" + category + '\'' +
+                ", accept=" + accept +
+                '}';
+    }
 }

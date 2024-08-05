@@ -1,9 +1,12 @@
 package db;
 
+import entity.Restaurant;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class RestaurantRepositoryImpl implements RestaurantRepository {
     private RestaurantRepositoryImpl(){ }
@@ -16,6 +19,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     private PreparedStatement pstmt;
     private ResultSet rs;
 
+    @Override
     public String getRestaurantState(int id) throws SQLException {
         String result="";
 
@@ -37,6 +41,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
         return result;
     }
 
+    @Override
     public int updateRestaurantState(int id, String state) throws SQLException{
         int result=0;
         try{
@@ -53,5 +58,58 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
             DBUtil.close(conn, pstmt);
         }
         return result;
+    }
+
+    @Override
+    public void updateRestaurant(Restaurant restaurant) {
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "update Restaurant set restaurantId = ? where state = ?, rname=?,phone_number=?,admin_id=?,address=?,category=?,accept=?";
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, restaurant.getId());
+            pstmt.setString(2, restaurant.getState());
+            pstmt.setString(3, restaurant.getRname());
+            pstmt.setString(4, restaurant.getNumber());
+            pstmt.setInt(5, restaurant.getAdminId());
+            pstmt.setString(6, restaurant.getAddress());
+            pstmt.setInt(7, restaurant.getAccept());
+
+            int result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("RestaurantRepository.updateRestaurant SQLException 발생");
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Restaurant> showAllRestaurant(int id) throws SQLException{
+        List<Restaurant>restaurantList=new LinkedList<>();
+
+        try{
+            String SQL="SELECT * FROM RESTAURANT WHERE adminId="+id;
+            conn=DBUtil.getConnection();
+            pstmt=conn.prepareStatement(SQL);
+            rs= pstmt.executeQuery();
+            while(rs.next()){
+                int rid=rs.getInt("id");
+                String state=rs.getString("state");
+                String rname=rs.getString("rname");
+                String number=rs.getString("phone_number");
+                int adminId=rs.getInt("admin_id");
+                String addr=rs.getString("address");
+                String category=rs.getString("category");
+                int accept=rs.getInt("accept");
+                restaurantList.add(new Restaurant(rid, state, rname, number, adminId, addr, category,accept));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("showAllRestaurant 오류");
+        }finally {
+            DBUtil.close(conn, pstmt,rs);
+        }
+
+        return restaurantList;
     }
 }

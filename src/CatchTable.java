@@ -11,7 +11,7 @@ public class CatchTable {
 
     public CatchTable() {
         this.br = new BufferedReader(new InputStreamReader(System.in));
-        this.adminManager = new AdminManager();
+        this.adminManager = AdminManager.getInstance();
     }
 
     public void run() {
@@ -21,8 +21,7 @@ public class CatchTable {
             try {
                 int command = Integer.parseInt(br.readLine());
                 if (command == 1) {
-                    // AdminManager 실행
-                    adminManager.run();
+                    AdminManager adminManager=AdminManager.getInstance();
                 } else if (command == 2) {
                     // CustomerManager 실행
                 } else if (command == 9) {

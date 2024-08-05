@@ -1,5 +1,7 @@
 package manager;
 
+import db.AdminRepository;
+import db.AdminRepositoryImpl;
 import db.RestaurantRepository;
 import db.RestaurantRepositoryImpl;
 import entity.Restaurant;
@@ -19,6 +21,7 @@ public class AdminManager {
     }
 
     RestaurantRepository restaurantRepository= RestaurantRepositoryImpl.getInstance();
+    AdminRepository adminRepository = AdminRepositoryImpl.getInstance();
     BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 
     public void run() {
@@ -28,11 +31,19 @@ public class AdminManager {
                 String command = br.readLine();
                 if (command.equals("1")) {
                     // 회원가입
+                    signUp();
                 } else if (command.equals("2")) {
                     /**
                      * 로그인 수행
                      * 로그인 성공 시 관리자 화면 메소드 진입? => managerView(adminId);
                      */
+                    int adminId = logIn();
+                    if (adminId > 0) {
+                        managerView(adminId);
+                    }
+                    else {
+                        System.out.println("잘못된 아이디 또는 패스워드입니다.");
+                    }
                 } else if (command.equals("8")) {
                     return;
                 } else if (command.equals("9")) {
@@ -42,15 +53,66 @@ public class AdminManager {
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    void managerView(int adminId) throws IOException {
+    public void signUp() {
+        try {
+            System.out.print("아이디를 입력하세요: ");
+            String username = br.readLine();
+            System.out.print("비밀번호를 입력하세요: ");
+            String password = br.readLine();
+
+            boolean success = adminRepository.registerUser(username, password);
+            if (success) {
+                System.out.println("회원가입 성공");
+            } else {
+                System.out.println("회원가입 실패.");
+            }
+        } catch (IOException e) {
+            System.out.println("입력 중 오류가 발생했습니다.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("회원가입 중 오류가 발생했습니다.");
+            e.printStackTrace();
+        }
+    }
+
+
+    public int logIn() {
+        int adminId = -1;
+        try {
+            System.out.print("아이디를 입력하세요: ");
+            String username = br.readLine();
+            System.out.print("비밀번호를 입력하세요: ");
+            String password = br.readLine();
+
+            adminId = adminRepository.loginUser(username, password);
+            if (adminId > 0) {
+                System.out.println("로그인 성공!");
+            } else {
+                System.out.println("로그인 실패. 아이디나 비밀번호가 잘못되었습니다.");
+            }
+        } catch (IOException e) {
+            System.out.println("입력 중 오류가 발생했습니다.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("로그인 중 오류가 발생했습니다.");
+            e.printStackTrace();
+        }
+        return adminId;
+    }
+
+    void managerView(int adminId) throws IOException, SQLException {
         while (true) {
             System.out.println("1:식당목록 호출, 2:식당 등록, 8:이전 상태로 돌아가기, 9:종료");
             String command = br.readLine();
             if (command.equals("1")) {
                 // 식당 목록 보여주기
+                showRestaurant(adminId);
             } else if (command.equals("2")) {
                 // 식당 등록
                 addRestaurant(adminId);

@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import manager.AdminManager;
 
 public class CatchTable {
     BufferedReader br;
@@ -22,7 +23,7 @@ public class CatchTable {
             try {
                 int command = Integer.parseInt(br.readLine());
                 if (command == 1) {
-                    // AdminManager 실행
+                    AdminManager adminManager=new AdminManager();
                 } else if (command == 2) {
                     // CustomerManager 실행
                 } else if (command == 9) {

@@ -7,7 +7,7 @@ public class Restaurant {
 
     private String rname;
 
-    private int number;
+    private String number;
 
     private int adminId;
 
@@ -17,7 +17,7 @@ public class Restaurant {
 
     private int accept;
 
-    public Restaurant(int id, String state, String rname, int number, int adminId, String address, String category, int accept) {
+    public Restaurant(int id, String state, String rname, String number, int adminId, String address, String category, int accept) {
         this.id = id;
         this.state = state;
         this.rname = rname;
@@ -40,7 +40,7 @@ public class Restaurant {
         return rname;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
@@ -58,5 +58,37 @@ public class Restaurant {
 
     public int getAccept() {
         return accept;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setRname(String rname) {
+        this.rname = rname;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setAccept(int accept) {
+        this.accept = accept;
     }
 }

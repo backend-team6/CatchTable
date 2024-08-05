@@ -11,7 +11,7 @@ public class CatchTable {
 
     public CatchTable() {
         this.br = new BufferedReader(new InputStreamReader(System.in));
-        this.adminManager = new AdminManager();
+        this.adminManager = AdminManager.getInstance();
     }
 
     public void run() {

@@ -24,6 +24,7 @@ public class CatchTable {
                 int command = Integer.parseInt(br.readLine());
                 if (command == 1) {
                     AdminManager adminManager=AdminManager.getInstance();
+                    adminManager.run();
                 } else if (command == 2) {
                     // CustomerManager 실행
                     customerManager.run();

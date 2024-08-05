@@ -20,7 +20,7 @@ public class AdminRepositoryImpl implements AdminRepository {
     public boolean registerUser(String username, String password) throws SQLException {
         boolean result = false;
         try {
-            String SQL = "INSERT INTO ADMIN_USERS (USERNAME, PASSWORD) VALUES (?, ?)";
+            String SQL = "INSERT INTO ADMIN (login_id, PASSWORD) VALUES (?, ?)";
             conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(SQL);
             pstmt.setString(1, username);
@@ -40,7 +40,7 @@ public class AdminRepositoryImpl implements AdminRepository {
     public Integer loginUser(String username, String password) throws SQLException {
         int result = -1;
         try {
-            String SQL = "SELECT admin_id FROM ADMIN_USERS WHERE USERNAME = ? AND PASSWORD = ?";
+            String SQL = "SELECT admin_id FROM ADMIN WHERE login_id = ? AND PASSWORD = ?";
             conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(SQL);
             pstmt.setString(1, username);

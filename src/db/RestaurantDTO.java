@@ -1,6 +1,6 @@
 package db;
 
-public class RastaurantDTO {
+public class RestaurantDTO {
     int id;
     String state;
     String rname;

@@ -64,16 +64,17 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     public void updateRestaurant(Restaurant restaurant) {
         try {
             conn = DBUtil.getConnection();
-            String sql = "update Restaurant set restaurantId = ? where state = ?, rname=?,phone_number=?,admin_id=?,address=?,category=?,accept=?";
+            String sql = "update Restaurant set state = ?, rname=?,phone_number=?,admin_id=?,address=?,category=?,accept=? where id = ?";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, restaurant.getId());
-            pstmt.setString(2, restaurant.getState());
-            pstmt.setString(3, restaurant.getRname());
-            pstmt.setString(4, restaurant.getNumber());
-            pstmt.setInt(5, restaurant.getAdminId());
-            pstmt.setString(6, restaurant.getAddress());
+            pstmt.setString(1, restaurant.getState());
+            pstmt.setString(2, restaurant.getRname());
+            pstmt.setString(3, restaurant.getNumber());
+            pstmt.setInt(4, restaurant.getAdminId());
+            pstmt.setString(5, restaurant.getAddress());
+            pstmt.setString(6,restaurant.getCategory());
             pstmt.setInt(7, restaurant.getAccept());
+            pstmt.setInt(8, restaurant.getId());
 
             int result = pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -88,7 +89,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
         List<Restaurant>restaurantList=new LinkedList<>();
 
         try{
-            String SQL="SELECT * FROM RESTAURANT WHERE adminId="+id;
+            String SQL="SELECT * FROM RESTAURANT WHERE admin_id="+id;
             conn=DBUtil.getConnection();
             pstmt=conn.prepareStatement(SQL);
             rs= pstmt.executeQuery();
@@ -117,7 +118,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     public void saveRestaurant(Restaurant restaurant) {
         try {
             conn = DBUtil.getConnection();
-            String sql = "insert into restaurant values (?,?,?,?,?,?,?)";
+            String sql = "insert into restaurant(state,rname, phone_number,admin_id,address,category, accept) values (?,?,?,?,?,?,?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, restaurant.getState());
             pstmt.setString(2, restaurant.getRname());

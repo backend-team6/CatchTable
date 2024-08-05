@@ -2,7 +2,7 @@ package manager;
 
 import db.CustomerRepository;
 import db.CustomerRepositoryImpl;
-import db.RastaurantDTO;
+import db.RestaurantDTO;
 import db.ReservationDTO;
 import entity.Reservation;
 
@@ -52,10 +52,10 @@ public class CustomerManager {
 
     //전체 식당 리스트 출력
     private void getRestaurantList() throws SQLException {
-        List<RastaurantDTO> restaurants = customerRepository.selectAllRastaurant();
+        List<RestaurantDTO> restaurants = customerRepository.selectAllRestaurant();
 
-        for (RastaurantDTO rastaurantDTO : restaurants) {
-            System.out.println(rastaurantDTO);
+        for (RestaurantDTO restaurantDTO : restaurants) {
+            System.out.println(restaurantDTO);
         }
     }
 

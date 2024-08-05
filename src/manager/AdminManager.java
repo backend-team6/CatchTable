@@ -276,7 +276,7 @@ public class AdminManager {
             System.out.print("주소 : ");
             restaurant.setAddress(br.readLine());
             System.out.print("카테고리 : ");
-            restaurant.setAddress(br.readLine());
+            restaurant.setCategory(br.readLine());
             System.out.println("수용 가능 인원 수");
             restaurant.setAccept(Integer.parseInt(br.readLine()));
 

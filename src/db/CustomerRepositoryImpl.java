@@ -75,7 +75,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         ReservationDTO reservationDTO = null;
 
         try {
-            String sql = "select a.id, b.rname, a.name from reservation a join restaurant b on a.restaurant_id = b.id where a.phoneNumber = " + phoneNumber;
+            String sql = "select a.id, a.count, b.rname, a.name from reservation a join restaurant b on a.restaurant_id = b.id where a.phoneNumber = " + phoneNumber;
             conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
@@ -111,6 +111,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         reservationDTO.setRname(rs.getString("b.rname"));
         reservationDTO.setName(rs.getString("a.name"));
         reservationDTO.setPhoneNumber(phoneNumber);
+        reservationDTO.setCount(rs.getInt("a.count"));
         return reservationDTO;
     }
 }

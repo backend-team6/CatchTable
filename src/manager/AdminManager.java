@@ -53,6 +53,7 @@ public class AdminManager {
                 // 식당 목록 보여주기
             } else if (command.equals("2")) {
                 // 식당 등록
+                addRestaurant(adminId);
             } else if (command.equals("8")) {
                 return;
             } else if (command.equals("9")) {
@@ -110,8 +111,8 @@ public class AdminManager {
         switch (selectNum){
             case 1: updateRestaurant(selectedRestaurant); break;
             case 2: updateRestaurantState(selectedRestaurant); break;
-            case 3: printWaitList(selectedRestaurant); break;
-            case 4: receiveCustomer(selectedRestaurant); break;
+//            case 3: printWaitList(selectedRestaurant); break;
+//            case 4: receiveCustomer(selectedRestaurant); break;
             case 5: return ;
             case 9: System.exit(0);
             default:
@@ -197,6 +198,32 @@ public class AdminManager {
             e.printStackTrace();
             System.out.println("SQLException 발생");
             throw new RuntimeException(e);
+        }
+    }
+
+    public void addRestaurant(int adminId) {
+        try {
+
+            Restaurant restaurant = new Restaurant();
+            restaurant.setAdminId(adminId);
+            restaurant.setState("준비중");
+            System.out.print("업체명 : ");
+            restaurant.setRname(br.readLine());
+            System.out.print("전화번호 : ");
+            restaurant.setNumber(br.readLine());
+            System.out.print("주소 : ");
+            restaurant.setAddress(br.readLine());
+            System.out.print("카테고리 : ");
+            restaurant.setAddress(br.readLine());
+            System.out.println("수용 가능 인원 수");
+            restaurant.setAccept(Integer.parseInt(br.readLine()));
+
+            restaurantRepository.saveRestaurant(restaurant);
+        } catch (NumberFormatException e) {
+            System.out.println("숫자를 입력해주세요.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("IOException 발생");
         }
     }
 }

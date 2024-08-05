@@ -112,4 +112,26 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 
         return restaurantList;
     }
+
+    @Override
+    public void saveRestaurant(Restaurant restaurant) {
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "insert into restaurant values (?,?,?,?,?,?,?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, restaurant.getState());
+            pstmt.setString(2, restaurant.getRname());
+            pstmt.setString(3, restaurant.getNumber());
+            pstmt.setInt(4, restaurant.getAdminId());
+            pstmt.setString(5, restaurant.getAddress());
+            pstmt.setString(6, restaurant.getCategory());
+            pstmt.setInt(7, restaurant.getAccept());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQL 오류");
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 }

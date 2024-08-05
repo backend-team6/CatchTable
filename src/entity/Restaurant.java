@@ -28,6 +28,10 @@ public class Restaurant {
         this.accept = accept;
     }
 
+    public Restaurant() {
+
+    }
+
     public int getId() {
         return id;
     }

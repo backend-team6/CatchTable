@@ -13,6 +13,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CustomerManager {
+    private CustomerManager() {
+    }
+
+    public static CustomerManager instance = new CustomerManager();
+
+    public static CustomerManager getInstance() {
+        return instance;
+    }
+
     CustomerRepository customerRepository = CustomerRepositoryImpl.getInstance();
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -45,7 +54,7 @@ public class CustomerManager {
     private void getRestaurantList() throws SQLException {
         List<RastaurantDTO> restaurants = customerRepository.selectAllRastaurant();
 
-        for (RastaurantDTO rastaurantDTO: restaurants) {
+        for (RastaurantDTO rastaurantDTO : restaurants) {
             System.out.println(rastaurantDTO);
         }
     }

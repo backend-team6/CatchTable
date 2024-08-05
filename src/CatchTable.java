@@ -13,7 +13,7 @@ public class CatchTable {
     public CatchTable() {
         this.br = new BufferedReader(new InputStreamReader(System.in));
         this.adminManager = AdminManager.getInstance();
-        this.customerManager = new CustomerManager();
+        this.customerManager = CustomerManager.getInstance();
     }
 
     public void run() {

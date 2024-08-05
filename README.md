@@ -35,6 +35,14 @@
     - 전화번호를 입력해 현재 나의 대기 순서가 몇 번인지 확인할 수 있다.
     - 대기를 취소할 수 있다.
 
+### 실행 이미지
+![image](https://github.com/user-attachments/assets/546e6b01-4bf8-48b2-83dc-b6fcb1b462b4)
+
+![image](https://github.com/user-attachments/assets/96e4ce4a-db76-4115-8ef0-00bf9f2beeff)
+
+![image](https://github.com/user-attachments/assets/a3e83069-3aef-47d9-bdc7-c70a9ff4144c)
+
+
 ### 미니 프로젝트 중 겪은 문제점
 
 - 기능을 중심으로 설계

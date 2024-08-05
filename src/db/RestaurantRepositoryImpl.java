@@ -1,5 +1,7 @@
 package db;
 
+import entity.Restaurant;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,5 +55,26 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
             DBUtil.close(conn, pstmt);
         }
         return result;
+    }
+
+    @Override
+    public void updateRestaurant(Restaurant restaurant) {
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "update Restaurant set restaurantId = ? where state = ?, rname=?,phone_number=?,admin_id=?,address=?,category=?,accept=?";
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, restaurant.getId());
+            pstmt.setString(2, restaurant.getState());
+            pstmt.setString(3, restaurant.getRname());
+            pstmt.setString(4, restaurant.getNumber());
+            pstmt.setInt(5, restaurant.getAdminId());
+            pstmt.setString(6, restaurant.getAddress());
+            pstmt.setInt(7, restaurant.getAccept());
+
+            int result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -19,6 +19,13 @@ public class Reservation {
         this.phoneNumber = phoneNumber;
     }
 
+    public Reservation(int restaurantId, int count, String name, String phoneNumber) {
+        this.restaurantId = restaurantId;
+        this.count = count;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
     public int getId() {
         return id;
     }

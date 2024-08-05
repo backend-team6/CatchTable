@@ -2,16 +2,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import manager.AdminManager;
+import manager.CustomerManager;
 
 public class CatchTable {
     BufferedReader br;
     AdminManager adminManager;
     // CustomerManager
-
+    CustomerManager customerManager;
 
     public CatchTable() {
         this.br = new BufferedReader(new InputStreamReader(System.in));
         this.adminManager = AdminManager.getInstance();
+        this.customerManager = new CustomerManager();
     }
 
     public void run() {
@@ -24,6 +26,7 @@ public class CatchTable {
                     AdminManager adminManager=AdminManager.getInstance();
                 } else if (command == 2) {
                     // CustomerManager 실행
+                    customerManager.run();
                 } else if (command == 9) {
                     System.out.println("종료합니다.");
                     break;

@@ -74,6 +74,8 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 
             int result = pstmt.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("RestaurantRepository.updateRestaurant SQLException 발생");
             throw new RuntimeException(e);
         }
     }

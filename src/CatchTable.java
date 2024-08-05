@@ -5,15 +5,13 @@ import manager.AdminManager;
 
 public class CatchTable {
     BufferedReader br;
-
-    // AdminManager
+    AdminManager adminManager;
     // CustomerManager
 
 
     public CatchTable() {
         this.br = new BufferedReader(new InputStreamReader(System.in));
-        // AdminManager
-        // CustomerManager
+        this.adminManager = new AdminManager();
     }
 
     public void run() {
@@ -23,7 +21,8 @@ public class CatchTable {
             try {
                 int command = Integer.parseInt(br.readLine());
                 if (command == 1) {
-                    AdminManager adminManager=new AdminManager();
+                    // AdminManager 실행
+                    adminManager.run();
                 } else if (command == 2) {
                     // CustomerManager 실행
                 } else if (command == 9) {

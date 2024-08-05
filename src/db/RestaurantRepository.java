@@ -10,7 +10,5 @@ public interface RestaurantRepository {
 
     int updateRestaurantState(int id, String state) throws SQLException;
 
-    void updateRestaurant(Restaurant restaurant);
-
-
+    void updateRestaurant(Restaurant restaurant) throws SQLException;
 }

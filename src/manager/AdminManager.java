@@ -14,6 +14,46 @@ public class AdminManager {
 
     BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 
+    public void run() {
+        try {
+            while (true) {
+                System.out.println("1:회원가입, 2:로그인 : 8:이전 상태로 돌아기기, 9:종료");
+                String command = br.readLine();
+                if (command.equals("1")) {
+                    // 회원가입
+                } else if (command.equals("2")) {
+                    /**
+                     * 로그인 수행
+                     * 로그인 성공 시 관리자 화면 메소드 진입? => managerView(adminId);
+                     */
+                } else if (command.equals("8")) {
+                    return;
+                } else if (command.equals("9")) {
+                    System.exit(0);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    void managerView(int adminId) throws IOException {
+        while (true) {
+            System.out.println("1:식당목록 호출, 2:식당 등록, 8:이전 상태로 돌아가기, 9:종료");
+            String command = br.readLine();
+            if (command.equals("1")) {
+                // 식당 목록 보여주기
+            } else if (command.equals("2")) {
+                // 식당 등록
+            } else if (command.equals("8")) {
+                return;
+            } else if (command.equals("9")) {
+                System.exit(0);
+            }
+        }
+    }
+
     void updateRestaurantState(Restaurant restaurant) throws SQLException { //로그인할 때 id받기
         String nowState=restaurant.getState();
         System.out.println("--- 식당 정보를 수정합니다. ---");
@@ -86,6 +126,10 @@ public class AdminManager {
         }
         try {
             restaurantRepository.updateRestaurant(restaurant);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("SQLException 발생");
+            throw new RuntimeException(e);
         }
     }
 }
